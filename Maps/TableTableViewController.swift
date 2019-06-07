@@ -7,30 +7,43 @@
 //
 
 import UIKit
-
+import MapKit
+protocol createLine {
+    func drawLine(_ locations: [CLLocationCoordinate2D])
+}
 class TableTableViewController: UITableViewController {
 
+    let roads = ["Gdansk -> Sopot", "Gdynia -> Gdansk"]
+    var delegate: ViewController?
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return roads.count
     }
 
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.textLabel?.text = roads[indexPath.row]
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            let locations = [CLLocationCoordinate2D(latitude: 54.352024, longitude: 18.646639),
+                             CLLocationCoordinate2D(latitude: 54.441582, longitude: 18.560097)]
+            delegate!.drawLine(locations)
+        } else {
+            let locations = [CLLocationCoordinate2D(latitude: 54.352024, longitude: 18.646639),
+                             CLLocationCoordinate2D(latitude: 54.518890, longitude: 18.530540)]
+            delegate!.drawLine(locations)
+        }
+    }
 
 }

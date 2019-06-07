@@ -8,8 +8,8 @@
 
 import UIKit
 import MapKit
-class ViewController: UIViewController, MKMapViewDelegate {
-
+class ViewController: UIViewController, MKMapViewDelegate, createLine {
+    
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -29,10 +29,10 @@ class ViewController: UIViewController, MKMapViewDelegate {
     }
 
     func createPolyline() {
-        let locations = [CLLocationCoordinate2D(latitude: 54.3520, longitude: 18.6466),
-                         CLLocationCoordinate2D(latitude: 54.3600, longitude: 18.6366),
-                         CLLocationCoordinate2D(latitude: 54.3640, longitude: 18.6266),
-                         CLLocationCoordinate2D(latitude: 54.3660, longitude: 18.6166)]
+        let locations = [CLLocationCoordinate2D(latitude: 54.371943, longitude: 18.611805),
+                         CLLocationCoordinate2D(latitude: 54.371268, longitude: 18.612341),
+                         CLLocationCoordinate2D(latitude: 54.371956, longitude: 18.612942),
+                         CLLocationCoordinate2D(latitude: 54.371943, longitude: 18.611805)]
         let aPolyline = MKPolyline(coordinates: locations, count: locations.count)
         mapView.addOverlay(aPolyline)
     }
@@ -47,10 +47,21 @@ class ViewController: UIViewController, MKMapViewDelegate {
         return MKPolylineRenderer()
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segue" {
+            let vcDestination = segue.destination as! TableTableViewController
+            vcDestination.delegate = self
+        }
+    }
     
     @IBAction func selectRoadButtonClicked(_ sender: Any) {
         
         performSegue(withIdentifier: "segue", sender: self)
+    }
+    
+    func drawLine(_ locations: [CLLocationCoordinate2D]) {
+        let aPolyline = MKPolyline(coordinates: locations, count: locations.count)
+        mapView.addOverlay(aPolyline)
     }
     
 }
