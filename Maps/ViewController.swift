@@ -50,7 +50,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     @IBAction func selectRoadButtonClicked(_ sender: Any) {
         
-        
+        performSegue(withIdentifier: "segue", sender: self)
     }
     
 }
